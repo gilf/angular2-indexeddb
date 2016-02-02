@@ -1,4 +1,4 @@
-angular2-to-indexeddb
+angular2-indexeddb
 ==============
 
 angular2-indexeddb is an experimental service that wraps indexeddb database in an Angular.js 2 service.
