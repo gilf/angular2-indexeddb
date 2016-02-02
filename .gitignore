@@ -1,0 +1,7 @@
+/.idea
+/node_modules
+npm-debug.log
+index.html
+index1.html
+main.*
+app.component.*
