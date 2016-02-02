@@ -10,14 +10,14 @@ Installation
 ------------
 
 You can choose your preferred method of installation:
-* Download from github: [angular2-indexeddb.min.js](https://github.com/gilf/angular2-to-indexeddb/blob/master/angular2-indexeddb.min.js)
+* Download from github: [angular2-indexeddb.min.js](https://github.com/gilf/angular2-indexeddb/blob/master/angular2-indexeddb.min.js)
 
 Usage
 -----
 Include **angular2-indexeddb.js** in your application.
 
 ```html
-<script src="components/angular-to-indexeddb/angular2-indexeddb.js"></script>
+<script src="components/angular2-indexeddb/angular2-indexeddb.js"></script>
 ```
 
 Import the the `AngularIndexedDB` class as a dependency:
