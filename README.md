@@ -122,6 +122,25 @@ db.reomove('people', 3).then(() => {
 });
 ```
 
+* openCursor(storeName, cursorCallback): opens an objectStore cursor to enable iterating on the objectStore.
+The first parameter is the store name and the second parameter callback function to run when the cursor succeeds to be opened.
+**openCursor** returns a promise that is resolved when the cursor finishes running or rejected if an error occurred.
+
+Usage example:
+
+```js
+db.openCursor('people', (evt) => {
+    var cursor = evt.target.result;
+    if(cursor) {
+        console.log(cursor.value);
+        cursor.continue();
+    } else {
+        console.log('Entries all displayed.');
+    }
+});
+
+```
+
 License
 ----
 

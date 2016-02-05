@@ -191,6 +191,40 @@ export class AngularIndexedDB {
 
         return promise;
     }
+
+    openCursor(storeName, cursorCallback: (evt) => void) {
+        let self = this;
+        let promise = new Promise<any>((resolve, reject)=> {
+            if (!self.dbWrapper.db) {
+                reject('You need to use the createStore function to create a database before you query it!');
+            }
+            if (!self.dbWrapper.validateStoreName(storeName)) {
+                reject('objectStore does not exists: ' + storeName);
+            }
+
+            let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
+                    dbMode: self.utils.dbMode.readonly,
+                    error: (e: Event) => {
+                        reject(e);
+                    },
+                    complete: (e: Event) => {
+                        resolve();
+                    },
+                    abort: (e: Event) => {
+                        reject(e);
+                    }
+                }),
+                objectStore = transaction.objectStore(storeName),
+                request = objectStore.openCursor();
+
+            request.onsuccess = (evt) => {
+                cursorCallback(evt);
+                resolve();
+            };
+        });
+
+        return promise;
+    }
 }
 
 class Utils {
