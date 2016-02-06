@@ -115,7 +115,7 @@ The first parameter is the store name to modify and the second parameter is the 
 Usage example:
 
 ```js
-db.reomove('people', 3).then(() => {
+db.remove('people', 3).then(() => {
     // Do something after remove
 }, (error) => {
     console.log(error);
