@@ -34,7 +34,7 @@ export class AngularIndexedDB {
         return promise;
     }
 
-    getByKey(storeName: string, key) {
+    getByKey(storeName: string, key: any) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
             if (!self.dbWrapper.db) {
@@ -251,6 +251,41 @@ export class AngularIndexedDB {
                 objectStore = transaction.objectStore(storeName);
             objectStore.clear();
             resolve();
+        });
+
+        return promise;
+    }
+
+    getByIndex(storeName: string, indexName: string, key: any) {
+        let self = this;
+        let promise = new Promise<any>((resolve, reject)=> {
+            if (!self.dbWrapper.db) {
+                reject('You need to use the createStore function to create a database before you query it!');
+            }
+            if (!self.dbWrapper.validateStoreName(storeName)) {
+                reject('objectStore does not exists: ' + storeName);
+            }
+
+            let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
+                    dbMode: self.utils.dbMode.readonly,
+                    error: (e: Event) => {
+                        reject(e);
+                    },
+                    complete: (e: Event) => {
+                        resolve(result);
+                    },
+                    abort: (e: Event) => {
+                        reject(e);
+                    }
+                }),
+                result,
+                objectStore = transaction.objectStore(storeName),
+                index = objectStore.index(indexName),
+                request = index.get(key);
+
+            request.onsuccess = (event) => {
+                result = event.target.result;
+            };
         });
 
         return promise;

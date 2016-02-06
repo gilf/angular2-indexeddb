@@ -79,6 +79,20 @@ db.getAll('people').then((people) => {
 });
 ```
 
+* getByIndex(storeName, indexName, key): returns an stored item using an objectStore's index.
+The first parameter is the store name to query, the second parameter is the index and third parameter is the item to query.
+**getByIndex** returns a promise that is resolved when the item successfully returned or rejected if an error occurred.
+
+Usage example:
+
+```js
+db.getByIndex('people', 'name', 'Dave').then((person) => {
+    console.log(person);
+}, (error) => {
+    console.log(error);
+});
+```
+
 * add(storeName, value, key): Adds to the given objectStore the key and value pair.
 The first parameter is the store name to modify, the second parameter is the value and the third parameter is the key (if not auto-generated).
 **add** returns a promise that is resolved when the value was added or rejected if an error occurred.
