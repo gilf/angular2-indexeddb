@@ -37,12 +37,7 @@ export class AngularIndexedDB {
     getByKey(storeName: string, key: any) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
-            if (!self.dbWrapper.db) {
-                 reject('You need to use the createStore function to create a database before you query it!');
-            }
-            if (!self.dbWrapper.validateStoreName(storeName)) {
-                reject('objectStore does not exists: ' + storeName);
-            }
+            self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readonly,
@@ -69,12 +64,7 @@ export class AngularIndexedDB {
     getAll(storeName: string) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
-            if (!self.dbWrapper.db) {
-                reject('You need to use the createStore function to create a database before you query it!');
-            }
-            if (!self.dbWrapper.validateStoreName(storeName)) {
-                reject('objectStore does not exists: ' + storeName);
-            }
+            self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readonly,
@@ -108,12 +98,7 @@ export class AngularIndexedDB {
     add(storeName: string, value: any, key: any) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
-            if (!self.dbWrapper.db) {
-                reject('You need to use the createStore function to create a database before you query it!');
-            }
-            if (!self.dbWrapper.validateStoreName(storeName)) {
-                reject('objectStore does not exists: ' + storeName);
-            }
+            self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readwrite,
@@ -135,12 +120,7 @@ export class AngularIndexedDB {
     update(storeName: string, value: any, key: any) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
-            if (!self.dbWrapper.db) {
-                reject('You need to use the createStore function to create a database before you query it!');
-            }
-            if (!self.dbWrapper.validateStoreName(storeName)) {
-                reject('objectStore does not exists: ' + storeName);
-            }
+            self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readwrite,
@@ -165,12 +145,7 @@ export class AngularIndexedDB {
     delete(storeName: string, key: any) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
-            if (!self.dbWrapper.db) {
-                reject('You need to use the createStore function to create a database before you query it!');
-            }
-            if (!self.dbWrapper.validateStoreName(storeName)) {
-                reject('objectStore does not exists: ' + storeName);
-            }
+            self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readwrite,
@@ -195,12 +170,7 @@ export class AngularIndexedDB {
     openCursor(storeName, cursorCallback: (evt) => void) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
-            if (!self.dbWrapper.db) {
-                reject('You need to use the createStore function to create a database before you query it!');
-            }
-            if (!self.dbWrapper.validateStoreName(storeName)) {
-                reject('objectStore does not exists: ' + storeName);
-            }
+            self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readonly,
@@ -229,12 +199,7 @@ export class AngularIndexedDB {
     clear(storeName: string) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
-            if (!self.dbWrapper.db) {
-                reject('You need to use the createStore function to create a database before you query it!');
-            }
-            if (!self.dbWrapper.validateStoreName(storeName)) {
-                reject('objectStore does not exists: ' + storeName);
-            }
+            self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readwrite,
@@ -259,12 +224,7 @@ export class AngularIndexedDB {
     getByIndex(storeName: string, indexName: string, key: any) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
-            if (!self.dbWrapper.db) {
-                reject('You need to use the createStore function to create a database before you query it!');
-            }
-            if (!self.dbWrapper.validateStoreName(storeName)) {
-                reject('objectStore does not exists: ' + storeName);
-            }
+            self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readonly,
@@ -323,9 +283,18 @@ class DbWrapper {
         this.storeNames = [];
     }
 
-    validateStoreName = function(storeName) {
+    validateStoreName(storeName) {
         return this.db.objectStoreNames.contains(storeName);
     };
+
+    validateBeforeTransaction(storeName: string, reject) {
+        if (!this.db) {
+            reject('You need to use the createStore function to create a database before you query it!');
+        }
+        if (!this.validateStoreName(storeName)) {
+            reject(('objectStore does not exists: ' + storeName));
+        }
+    }
 
     createTransaction(options: { storeName: string, dbMode: string, error: (e: Event) => any, complete: (e: Event) => any, abort?: (e:Event) => any }): IDBTransaction {
         let trans: IDBTransaction = this.db.transaction(options.storeName, options.dbMode);
