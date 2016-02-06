@@ -105,7 +105,7 @@ export class AngularIndexedDB {
         return promise;
     }
 
-    add(storeName: string, key: any, value: any) {
+    add(storeName: string, value: any, key: any) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
             if (!self.dbWrapper.db) {
@@ -132,7 +132,7 @@ export class AngularIndexedDB {
         return promise;
     }
 
-    update(storeName: string, value: any) {
+    update(storeName: string, value: any, key: any) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
             if (!self.dbWrapper.db) {
@@ -156,7 +156,7 @@ export class AngularIndexedDB {
                 }),
                 objectStore = transaction.objectStore(storeName);
 
-            objectStore.put(value);
+            objectStore.put(value, key);
         });
 
         return promise;
@@ -221,6 +221,36 @@ export class AngularIndexedDB {
                 cursorCallback(evt);
                 resolve();
             };
+        });
+
+        return promise;
+    }
+
+    clear(storeName: string) {
+        let self = this;
+        let promise = new Promise<any>((resolve, reject)=> {
+            if (!self.dbWrapper.db) {
+                reject('You need to use the createStore function to create a database before you query it!');
+            }
+            if (!self.dbWrapper.validateStoreName(storeName)) {
+                reject('objectStore does not exists: ' + storeName);
+            }
+
+            let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
+                    dbMode: self.utils.dbMode.readwrite,
+                    error: (e: Event) => {
+                        reject(e);
+                    },
+                    complete: (e: Event) => {
+                        resolve();
+                    },
+                    abort: (e: Event) => {
+                        reject(e);
+                    }
+                }),
+                objectStore = transaction.objectStore(storeName);
+            objectStore.clear();
+            resolve();
         });
 
         return promise;

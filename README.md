@@ -79,14 +79,14 @@ db.getAll('people').then((people) => {
 });
 ```
 
-* add(storeName, key, value): Adds to the given objectStore the key and value pair.
-The first parameter is the store name to modify, the second parameter is the key and the third parameter is the value.
+* add(storeName, value, key): Adds to the given objectStore the key and value pair.
+The first parameter is the store name to modify, the second parameter is the value and the third parameter is the key (if not auto-generated).
 **add** returns a promise that is resolved when the value was added or rejected if an error occurred.
 
-Usage example:
+Usage example (add without a key):
 
 ```js
-db.add('people', undefined, { name: 'name', email: 'email' }).then(() => {
+db.add('people', { name: 'name', email: 'email' }).then(() => {
     // Do something after the value was added
 }, (error) => {
     console.log(error);
@@ -94,11 +94,11 @@ db.add('people', undefined, { name: 'name', email: 'email' }).then(() => {
 ```
 In the previous example I'm using undefined as the key because the key is configured in the objectStore as auto-generated.
 
-* update(storeName, value): Updates the given value in the objectStore.
-The first parameter is the store name to modify and the second parameter is the value to update.
+* update(storeName, value, key?): Updates the given value in the objectStore.
+The first parameter is the store name to modify, the second parameter is the value to update and the third parameter is the key (if there is no key don't provide it).
 **update** returns a promise that is resolved when the value was updated or rejected if an error occurred.
 
-Usage example:
+Usage example (update without a key):
 
 ```js
 db.update('people', { id: 3, name: 'name', email: 'email' }).then(() => {
@@ -137,6 +137,21 @@ db.openCursor('people', (evt) => {
     } else {
         console.log('Entries all displayed.');
     }
+});
+
+```
+
+* clear(storeName): clears all the data in an objectStore.
+The first parameter is the store name to clear.
+**clear** returns a promise that is resolved when the objectStore was cleared or rejected if an error occurred.
+
+Usage example:
+
+```js
+db.clear('people').then(() => {
+    // Do something after clear
+}, (error) => {
+    console.log(error);
 });
 
 ```
