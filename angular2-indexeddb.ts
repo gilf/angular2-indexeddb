@@ -40,7 +40,7 @@ export class AngularIndexedDB {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                    dbMode: self.utils.dbMode.readonly,
+                    dbMode: self.utils.dbMode.readOnly,
                     error: (e: Event) => {
                         reject(e);
                     },
@@ -67,7 +67,7 @@ export class AngularIndexedDB {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                    dbMode: self.utils.dbMode.readonly,
+                    dbMode: self.utils.dbMode.readOnly,
                     error: (e: Event) => {
                         reject(e);
                     },
@@ -84,7 +84,7 @@ export class AngularIndexedDB {
             };
 
             request.onsuccess = function (evt) {
-                var cursor = evt.target.result;
+                var cursor = (<IDBOpenDBRequest>evt.target).result;
                 if (cursor) {
                     result.push(cursor.value);
                     cursor["continue"]();
@@ -101,7 +101,7 @@ export class AngularIndexedDB {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                    dbMode: self.utils.dbMode.readwrite,
+                    dbMode: self.utils.dbMode.readWrite,
                     error: (e: Event) => {
                         reject(e);
                     },
@@ -123,7 +123,7 @@ export class AngularIndexedDB {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                    dbMode: self.utils.dbMode.readwrite,
+                    dbMode: self.utils.dbMode.readWrite,
                     error: (e: Event) => {
                         reject(e);
                     },
@@ -148,7 +148,7 @@ export class AngularIndexedDB {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                    dbMode: self.utils.dbMode.readwrite,
+                    dbMode: self.utils.dbMode.readWrite,
                     error: (e: Event) => {
                         reject(e);
                     },
@@ -173,7 +173,7 @@ export class AngularIndexedDB {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                    dbMode: self.utils.dbMode.readonly,
+                    dbMode: self.utils.dbMode.readOnly,
                     error: (e: Event) => {
                         reject(e);
                     },
@@ -202,7 +202,7 @@ export class AngularIndexedDB {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                    dbMode: self.utils.dbMode.readwrite,
+                    dbMode: self.utils.dbMode.readWrite,
                     error: (e: Event) => {
                         reject(e);
                     },
@@ -227,7 +227,7 @@ export class AngularIndexedDB {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                    dbMode: self.utils.dbMode.readonly,
+                    dbMode: self.utils.dbMode.readOnly,
                     error: (e: Event) => {
                         reject(e);
                     },
@@ -244,7 +244,7 @@ export class AngularIndexedDB {
                 request = index.get(key);
 
             request.onsuccess = (event) => {
-                result = event.target.result;
+                result = (<IDBOpenDBRequest>event.target).result;
             };
         });
 
@@ -257,17 +257,17 @@ class Utils {
     indexedDB;
 
     constructor() {
-        this.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+        this.indexedDB = window.indexedDB || (<any>window).mozIndexedDB || (<any>window).webkitIndexedDB || window.msIndexedDB;
         this.dbMode = {
-            readonly: "readonly",
-            readwrite: "readwrite"
+            readOnly: "readonly",
+            readWrite: "readwrite"
         };
     }
 }
 
 interface DbMode {
-    readonly: string;
-    readwrite: string;
+    readOnly: string;
+    readWrite: string;
 }
 
 class DbWrapper {
