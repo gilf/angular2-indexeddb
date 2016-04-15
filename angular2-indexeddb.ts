@@ -273,14 +273,12 @@ interface DbMode {
 class DbWrapper {
     dbName: string;
     dbVersion: number;
-    db;
-    storeNames: Array<string>;
+    db: IDBDatabase;
 
     constructor(dbName, version) {
         this.dbName = dbName;
         this.dbVersion = version || 1;
         this.db = null;
-        this.storeNames = [];
     }
 
     validateStoreName(storeName) {
