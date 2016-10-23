@@ -1,8 +1,8 @@
 angular2-indexeddb
 ==============
 
-angular2-indexeddb is an experimental service that wraps indexeddb database in an Angular.js 2 service.
-It exposes very simple API to enable the usage of indexeddb without most of it plumbing.
+angular2-indexeddb is a service that wraps indexeddb database in an Angular 2 service.
+It exposes very simple promises API to enable the usage of indexeddb without most of it plumbing.
 
 Copyright (C) 2016, Gil Fink <gil@sparxys.com>
 
@@ -10,7 +10,7 @@ Installation
 ------------
 
 You can choose your preferred method of installation:
-* Download from npm
+* Download from npm:
     ```
     npm install angular2-indexeddb
     ```
