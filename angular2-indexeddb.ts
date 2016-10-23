@@ -257,7 +257,7 @@ class Utils {
     indexedDB;
 
     constructor() {
-        this.indexedDB = window.indexedDB || (<any>window).mozIndexedDB || (<any>window).webkitIndexedDB || window.msIndexedDB;
+        this.indexedDB = window.indexedDB || (<any>window).mozIndexedDB || (<any>window).webkitIndexedDB || (<any>window).msIndexedDB;
         this.dbMode = {
             readOnly: "readonly",
             readWrite: "readwrite"
