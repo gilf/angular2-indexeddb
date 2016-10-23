@@ -10,6 +10,10 @@ Installation
 ------------
 
 You can choose your preferred method of installation:
+* Download from npm
+    ```
+    npm install angular2-indexeddb
+    ```
 * Download from github: [angular2-indexeddb.min.js](https://github.com/gilf/angular2-indexeddb/blob/master/angular2-indexeddb.min.js)
 
 Usage
