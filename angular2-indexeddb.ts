@@ -1,6 +1,6 @@
 'use strict';
 
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class AngularIndexedDB {
@@ -45,7 +45,7 @@ export class AngularIndexedDB {
                         reject(e);
                     },
                     complete: (e: Event) => {
-                        resolve(result);
+                        resolve();
                     }
                 }),
                 objectStore = transaction.objectStore(storeName),
@@ -72,7 +72,7 @@ export class AngularIndexedDB {
                         reject(e);
                     },
                     complete: (e: Event) => {
-                        resolve(result);
+                        resolve();
                     }
                 }),
                 objectStore = transaction.objectStore(storeName),
@@ -84,7 +84,7 @@ export class AngularIndexedDB {
             };
 
             request.onsuccess = function (evt) {
-                var cursor = (<IDBOpenDBRequest>evt.target).result;
+                let cursor = (<IDBOpenDBRequest>evt.target).result;
                 if (cursor) {
                     result.push(cursor.value);
                     cursor["continue"]();
@@ -232,7 +232,7 @@ export class AngularIndexedDB {
                         reject(e);
                     },
                     complete: (e: Event) => {
-                        resolve(result);
+                        resolve();
                     },
                     abort: (e: Event) => {
                         reject(e);
