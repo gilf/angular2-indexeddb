@@ -1,6 +1,6 @@
 {
   "name": "angular2-indexeddb",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": {
     "type": "git",
     "url": "http://github.com/gilf/angular2-indexeddb.git"
@@ -21,7 +21,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "angular2": "2.0.0-beta.2",
+    "@angular/core": "~2.1.0",
     "systemjs": "0.19.6",
     "es6-promise": "^3.0.2",
     "es6-shim": "^0.33.3",
