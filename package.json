@@ -10,6 +10,10 @@
     "angular2-indexeddb.d.ts",
     "angular2-indexeddb.min.js",
     "angular2-indexeddb.min.js.map",
+    "index.ts",
+    "index.d.ts",
+    "index.min.js",
+    "index.min.js.map",
     "CHANGELOG.md",
     "LICENSE"
   ],
