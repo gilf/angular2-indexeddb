@@ -27,7 +27,7 @@ Include **angular2-indexeddb.js** in your application.
 Import the the `AngularIndexedDB` class as a dependency:
 
 ```js
-import {AngularIndexedDB} from './angular2-indexeddb';
+import {AngularIndexedDB} from 'angular2-indexeddb';
 ```
 
 ### AngularIndexedDB service
