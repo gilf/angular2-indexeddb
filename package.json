@@ -1,6 +1,7 @@
 {
   "name": "angular2-indexeddb",
   "version": "1.0.4",
+  "description": "angular2-indexeddb is a library that wraps indexeddb database in an Angular 2 service",
   "repository": {
     "type": "git",
     "url": "http://github.com/gilf/angular2-indexeddb.git"
@@ -28,7 +29,8 @@
   "keywords": [
     "Angular",
     "indexedDB",
-    "ng"   
+    "ng",
+    "service"
   ],
   "dependencies": {
     "@angular/core": "~2.2.0",
