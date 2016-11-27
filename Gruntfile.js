@@ -15,7 +15,7 @@ module.exports = function (grunt) {
             },
             all: [
                 'Gruntfile.js',
-                'angular2-indexeddb.js',
+                'angular2-indexeddb.js'
             ]
         },
         uglify: {
