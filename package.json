@@ -25,6 +25,11 @@
     "build": "node_modules/.bin/grunt build"
   },
   "license": "MIT",
+  "keywords": [
+    "Angular",
+    "indexedDB",
+    "ng"   
+  ],
   "dependencies": {
     "@angular/core": "~2.2.0",
     "@types/es6-promise": "0.0.32",
