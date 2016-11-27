@@ -9,7 +9,8 @@
     "removeComments": false,
     "noImplicitAny": false,
     "declaration": true,
-    "typeRoots": ["./node_modules/@types"]
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["es6-promise"]
   },
   "exclude": [
     "node_modules"

@@ -1,6 +1,6 @@
 {
   "name": "angular2-indexeddb",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "angular2-indexeddb is a library that wraps indexeddb database in an Angular 2 service",
   "repository": {
     "type": "git",
@@ -34,7 +34,6 @@
   ],
   "dependencies": {
     "@angular/core": "~2.2.0",
-    "@types/es6-promise": "0.0.32",
     "grunt": "0.4.5",
     "grunt-cli": "0.1.13",
     "grunt-contrib-cssmin": "0.14.0",
@@ -49,6 +48,7 @@
   "devDependencies": {
     "concurrently": "^1.0.0",
     "lite-server": "^1.3.4",
-    "typescript": "^1.7.5"
+    "typescript": "^2.0.10",
+    "@types/es6-promise": "0.0.32"
   }
 }
