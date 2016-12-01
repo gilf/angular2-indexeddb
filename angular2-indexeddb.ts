@@ -45,16 +45,14 @@ export class AngularIndexedDB {
                         reject(e);
                     },
                     complete: (e: Event) => {
-                        resolve();
                     }
                 }),
                 objectStore = transaction.objectStore(storeName),
-                result,
                 request;
 
             request = objectStore.get(key);
             request.onsuccess = function (event) {
-                result = event.target.result;
+                resolve(event.target.result);
             }
         });
 
@@ -72,7 +70,6 @@ export class AngularIndexedDB {
                         reject(e);
                     },
                     complete: (e: Event) => {
-                        resolve();
                     }
                 }),
                 objectStore = transaction.objectStore(storeName),
@@ -88,6 +85,8 @@ export class AngularIndexedDB {
                 if (cursor) {
                     result.push(cursor.value);
                     cursor["continue"]();
+                } else {
+                    resolve(result);
                 }
             };
         });
@@ -231,20 +230,18 @@ export class AngularIndexedDB {
                     error: (e: Event) => {
                         reject(e);
                     },
-                    complete: (e: Event) => {
-                        resolve();
-                    },
                     abort: (e: Event) => {
                         reject(e);
+                    },
+                    complete: (e: Event) => {
                     }
                 }),
-                result,
                 objectStore = transaction.objectStore(storeName),
                 index = objectStore.index(indexName),
                 request = index.get(key);
 
             request.onsuccess = (event) => {
-                result = (<IDBOpenDBRequest>event.target).result;
+                resolve((<IDBOpenDBRequest>event.target).result);
             };
         });
 
