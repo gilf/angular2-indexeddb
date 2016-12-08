@@ -59,7 +59,7 @@ export class AngularIndexedDB {
         return promise;
     }
 
-    getAll(storeName: string) {
+    getAll(storeName: string, keyRange?: IDBKeyRange) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
@@ -74,7 +74,7 @@ export class AngularIndexedDB {
                 }),
                 objectStore = transaction.objectStore(storeName),
                 result = [],
-                request = objectStore.openCursor();
+                request = objectStore.openCursor(keyRange);
 
             request.onerror = function (e) {
                 reject(e);
@@ -94,7 +94,7 @@ export class AngularIndexedDB {
         return promise;
     }
 
-    add(storeName: string, value: any, key: any) {
+    add(storeName: string, value: any, key?: any) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
@@ -116,7 +116,7 @@ export class AngularIndexedDB {
         return promise;
     }
 
-    update(storeName: string, value: any, key: any) {
+    update(storeName: string, value: any, key?: any) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
@@ -166,7 +166,7 @@ export class AngularIndexedDB {
         return promise;
     }
 
-    openCursor(storeName, cursorCallback: (evt) => void) {
+    openCursor(storeName, cursorCallback: (evt) => void, keyRange?: IDBKeyRange) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
@@ -184,7 +184,7 @@ export class AngularIndexedDB {
                     }
                 }),
                 objectStore = transaction.objectStore(storeName),
-                request = objectStore.openCursor();
+                request = objectStore.openCursor(keyRange);
 
             request.onsuccess = (evt) => {
                 cursorCallback(evt);

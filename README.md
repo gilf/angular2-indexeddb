@@ -69,8 +69,9 @@ db.getByKey('people', 1).then((person) => {
 });
 ```
 
-* getAll(storeName): returns an array of all the items in the given objectStore.
+* getAll(storeName, keyRange): returns an array of all the items in the given objectStore.
 The first parameter is the store name to query.
+The second parameter is an optional IDBKeyRange object.
 **getAll** returns a promise that is resolved when we have the array of items or rejected if an error occurred.
 
 Usage example:
@@ -140,8 +141,8 @@ db.remove('people', 3).then(() => {
 });
 ```
 
-* openCursor(storeName, cursorCallback): opens an objectStore cursor to enable iterating on the objectStore.
-The first parameter is the store name and the second parameter callback function to run when the cursor succeeds to be opened.
+* openCursor(storeName, cursorCallback, keyRange): opens an objectStore cursor to enable iterating on the objectStore.
+The first parameter is the store name, the second parameter is a callback function to run when the cursor succeeds to be opened and the third parameter is optional IDBKeyRange object.
 **openCursor** returns a promise that is resolved when the cursor finishes running or rejected if an error occurred.
 
 Usage example:
@@ -155,7 +156,7 @@ db.openCursor('people', (evt) => {
     } else {
         console.log('Entries all displayed.');
     }
-});
+}, IDBKeyRange.bound("A", "F"));
 
 ```
 
