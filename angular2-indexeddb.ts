@@ -27,7 +27,7 @@ export class AngularIndexedDB {
                 };
 
                 request.onupgradeneeded = function (e) {
-                    upgradeCallback(e, self.dbWrapper.db);
+                    upgradeCallback(e, self.dbWrapper.db, request);
                 };
             });
 
