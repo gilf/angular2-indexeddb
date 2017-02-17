@@ -1,4 +1,3 @@
-/// <reference types="es6-promise" />
 export declare class AngularIndexedDB {
     private utils;
     private dbWrapper;
