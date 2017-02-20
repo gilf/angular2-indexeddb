@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "system",
+    "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
@@ -9,10 +9,14 @@
     "removeComments": false,
     "noImplicitAny": false,
     "declaration": true,
-    "typeRoots": ["./node_modules/@types"],
-    "types": ["es6-promise"]
+    "lib": ["dom","es6"]
   },
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "angularCompilerOptions": {
+   "genDir": ".",
+   "skipMetadataEmit" : false,
+   "skipTemplateCodegen": true
+ }
 }
