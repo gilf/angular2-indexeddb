@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var AngularIndexedDB = (function () {
     function AngularIndexedDB(dbName, version) {
@@ -51,7 +52,7 @@ var AngularIndexedDB = (function () {
         });
         return promise;
     };
-    AngularIndexedDB.prototype.getAll = function (storeName, keyRange) {
+    AngularIndexedDB.prototype.getAll = function (storeName, keyRange, indexName) {
         var self = this;
         var promise = new Promise(function (resolve, reject) {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
@@ -62,7 +63,14 @@ var AngularIndexedDB = (function () {
                 },
                 complete: function (e) {
                 }
-            }), objectStore = transaction.objectStore(storeName), result = [], request = objectStore.openCursor(keyRange);
+            }), objectStore = transaction.objectStore(storeName), result = [], request;
+            if (!indexName) {
+                request = objectStore.openCursor(keyRange);
+            }
+            else {
+                var index = objectStore.index(indexName);
+                request = index.openCursor(keyRange);
+            }
             request.onerror = function (e) {
                 reject(e);
             };

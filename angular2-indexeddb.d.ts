@@ -4,7 +4,7 @@ export declare class AngularIndexedDB {
     constructor(dbName: string, version: number);
     createStore(version: number, upgradeCallback: Function): Promise<any>;
     getByKey(storeName: string, key: any): Promise<any>;
-    getAll(storeName: string, keyRange?: IDBKeyRange): Promise<any>;
+    getAll(storeName: string, keyRange?: IDBKeyRange, indexName?: string): Promise<any>;
     add(storeName: string, value: any, key?: any): Promise<any>;
     update(storeName: string, value: any, key?: any): Promise<any>;
     delete(storeName: string, key: any): Promise<any>;
