@@ -69,9 +69,10 @@ db.getByKey('people', 1).then((person) => {
 });
 ```
 
-* getAll(storeName, keyRange): returns an array of all the items in the given objectStore.
+* getAll(storeName, keyRange, indexDetails): returns an array of all the items in the given objectStore.
 The first parameter is the store name to query.
 The second parameter is an optional IDBKeyRange object.
+The third parameter is an index details which must include index name and an optional order parameter.
 **getAll** returns a promise that is resolved when we have the array of items or rejected if an error occurred.
 
 Usage example:

@@ -59,7 +59,7 @@ export class AngularIndexedDB {
         return promise;
     }
 
-    getAll(storeName: string, keyRange?: IDBKeyRange, indexName?: string) {
+    getAll(storeName: string, keyRange?: IDBKeyRange, indexDetails?: IndexDetails) {
         let self = this;
         let promise = new Promise<any>((resolve, reject)=> {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
@@ -75,12 +75,13 @@ export class AngularIndexedDB {
                 objectStore = transaction.objectStore(storeName),
                 result: Array<any> = [],
                 request: IDBRequest;
-                if(!indexName) {
-                  request = objectStore.openCursor(keyRange);
+                if(indexDetails) {
+                    let index = objectStore.index(indexDetails.indexName),
+                        order = (indexDetails.order === 'desc') ? 'prev' : 'next';
+                    request = index.openCursor(keyRange, order);
                 }
                 else {
-                  let index = objectStore.index(indexName);
-                  request = index.openCursor(keyRange);
+                    request = objectStore.openCursor(keyRange);
                 }
 
             request.onerror = function (e) {
@@ -267,6 +268,11 @@ class Utils {
             readWrite: "readwrite"
         };
     }
+}
+
+export interface IndexDetails {
+    indexName: string;
+    order: string;
 }
 
 interface DbMode {

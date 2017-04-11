@@ -52,7 +52,7 @@ var AngularIndexedDB = (function () {
         });
         return promise;
     };
-    AngularIndexedDB.prototype.getAll = function (storeName, keyRange, indexName) {
+    AngularIndexedDB.prototype.getAll = function (storeName, keyRange, indexDetails) {
         var self = this;
         var promise = new Promise(function (resolve, reject) {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
@@ -64,12 +64,12 @@ var AngularIndexedDB = (function () {
                 complete: function (e) {
                 }
             }), objectStore = transaction.objectStore(storeName), result = [], request;
-            if (!indexName) {
-                request = objectStore.openCursor(keyRange);
+            if (indexDetails) {
+                var index = objectStore.index(indexDetails.indexName), order = (indexDetails.order === 'desc') ? 'prev' : 'next';
+                request = index.openCursor(keyRange, order);
             }
             else {
-                var index = objectStore.index(indexName);
-                request = index.openCursor(keyRange);
+                request = objectStore.openCursor(keyRange);
             }
             request.onerror = function (e) {
                 reject(e);
