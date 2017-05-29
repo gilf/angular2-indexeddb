@@ -118,7 +118,10 @@ export class AngularIndexedDB {
                 }),
                 objectStore = transaction.objectStore(storeName);
 
-            objectStore.add(value, key);
+            var request = objectStore.add(value, key);
+            request.onsuccess = (evt: any) => {
+                key = evt.target.result;
+            }
         });
 
         return promise;

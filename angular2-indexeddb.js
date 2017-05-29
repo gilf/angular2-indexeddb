@@ -100,7 +100,10 @@ var AngularIndexedDB = (function () {
                     resolve({ key: key, value: value });
                 }
             }), objectStore = transaction.objectStore(storeName);
-            objectStore.add(value, key);
+            var request = objectStore.add(value, key);
+            request.onsuccess = function (evt) {
+                key = evt.target.result;
+            };
         });
         return promise;
     };
