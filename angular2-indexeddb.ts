@@ -1,5 +1,3 @@
-'use strict';
-
 import {Injectable} from '@angular/core';
 
 @Injectable()
@@ -78,7 +76,7 @@ export class AngularIndexedDB {
                 if(indexDetails) {
                     let index = objectStore.index(indexDetails.indexName),
                         order = (indexDetails.order === 'desc') ? 'prev' : 'next';
-                    request = index.openCursor(keyRange, order);
+                    request = index.openCursor(keyRange, <IDBCursorDirection>order);
                 }
                 else {
                     request = objectStore.openCursor(keyRange);
@@ -154,7 +152,7 @@ export class AngularIndexedDB {
 
     delete(storeName: string, key: any) {
         let self = this;
-        let promise = new Promise<any>((resolve, reject)=> {
+        return new Promise<any>((resolve, reject)=> {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
@@ -173,8 +171,6 @@ export class AngularIndexedDB {
 
             objectStore["delete"](key);
         });
-
-        return promise;
     }
 
     openCursor(storeName: string, cursorCallback: (evt: Event) => void, keyRange?: IDBKeyRange) {
@@ -308,7 +304,7 @@ class DbWrapper {
     }
 
     createTransaction(options: { storeName: string, dbMode: string, error: (e: Event) => any, complete: (e: Event) => any, abort?: (e:Event) => any }): IDBTransaction {
-        let trans: IDBTransaction = this.db.transaction(options.storeName, options.dbMode);
+        let trans: IDBTransaction = this.db.transaction(options.storeName, <IDBTransactionMode>options.dbMode);
         trans.onerror = options.error;
         trans.oncomplete = options.complete;
         trans.onabort = options.abort;
