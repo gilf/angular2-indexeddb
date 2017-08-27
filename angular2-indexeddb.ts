@@ -76,7 +76,7 @@ export class AngularIndexedDB {
                 if(indexDetails) {
                     let index = objectStore.index(indexDetails.indexName),
                         order = (indexDetails.order === 'desc') ? 'prev' : 'next';
-                    request = index.openCursor(keyRange, <IDBCursorDirection>order);
+                    request = index.openCursor(keyRange, order);
                 }
                 else {
                     request = objectStore.openCursor(keyRange);
@@ -256,7 +256,7 @@ export class AngularIndexedDB {
     }
 }
 
-class Utils {
+export declare class Utils {
     dbMode: DbMode;
     indexedDB: IDBFactory;
 
@@ -304,7 +304,7 @@ class DbWrapper {
     }
 
     createTransaction(options: { storeName: string, dbMode: string, error: (e: Event) => any, complete: (e: Event) => any, abort?: (e:Event) => any }): IDBTransaction {
-        let trans: IDBTransaction = this.db.transaction(options.storeName, <IDBTransactionMode>options.dbMode);
+        let trans: IDBTransaction = this.db.transaction(options.storeName, options.dbMode);
         trans.onerror = options.error;
         trans.oncomplete = options.complete;
         trans.onabort = options.abort;
