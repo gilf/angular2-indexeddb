@@ -256,7 +256,7 @@ export class AngularIndexedDB {
     }
 }
 
-export declare class Utils {
+class Utils {
     dbMode: DbMode;
     indexedDB: IDBFactory;
 
