@@ -1,6 +1,9 @@
 angular2-indexeddb
 ==============
+**The original version can be found here: https://github.com/gilf/angular2-indexeddb**
 
+I just updated it to version 4.1.0 to use it with ionic.
+ 
 angular2-indexeddb is a service that wraps IndexedDB database in an Angular service.
 It exposes very simple promises API to enable the usage of IndexedDB without most of it plumbing.
 
@@ -12,7 +15,8 @@ Installation
 You can choose your preferred method of installation:
 * Download from npm:
     ```
-    npm install angular2-indexeddb
+    npm install git+https://git@github.com/jwiesmann/angular2-indexeddb.git --save
+
     ```
 * Download from github: [angular2-indexeddb.min.js](https://github.com/gilf/angular2-indexeddb/blob/master/angular2-indexeddb.min.js)
 
