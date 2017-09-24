@@ -1,5 +1,3 @@
-'use strict';
-
 import {Injectable} from '@angular/core';
 
 @Injectable()
@@ -154,7 +152,7 @@ export class AngularIndexedDB {
 
     delete(storeName: string, key: any) {
         let self = this;
-        let promise = new Promise<any>((resolve, reject)=> {
+        return new Promise<any>((resolve, reject)=> {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
@@ -173,8 +171,6 @@ export class AngularIndexedDB {
 
             objectStore["delete"](key);
         });
-
-        return promise;
     }
 
     openCursor(storeName: string, cursorCallback: (evt: Event) => void, keyRange?: IDBKeyRange) {
