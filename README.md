@@ -81,7 +81,7 @@ Usage example:
 db.getAll('people').then((people) => {
     console.log(people);
 }, (error) => {
-    console.log(people);
+    console.log(error);
 });
 ```
 
@@ -128,15 +128,15 @@ db.update('people', { id: 3, name: 'name', email: 'email' }).then(() => {
 });
 ```
 
-* remove(storeName, key): Removes the object that correspond with the key from the objectStore.
-The first parameter is the store name to modify and the second parameter is the key to remove.
-**remove** returns a promise that is resolved when the value was removed or rejected if an error occurred.
+* delete(storeName, key): deletes the object that correspond with the key from the objectStore.
+The first parameter is the store name to modify and the second parameter is the key to delete.
+**delete** returns a promise that is resolved when the value was deleted or rejected if an error occurred.
 
 Usage example:
 
 ```js
-db.remove('people', 3).then(() => {
-    // Do something after remove
+db.delete('people', 3).then(() => {
+    // Do something after delete
 }, (error) => {
     console.log(error);
 });
