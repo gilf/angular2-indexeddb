@@ -81,7 +81,7 @@ Usage example:
 db.getAll('people').then((people) => {
     console.log(people);
 }, (error) => {
-    console.log(people);
+    console.log(error);
 });
 ```
 
