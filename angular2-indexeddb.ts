@@ -12,7 +12,7 @@ export class AngularIndexedDB {
         this.dbWrapper = new DbWrapper(dbName, version);
     }
 
-    createStore(version: number, upgradeCallback: Function) {
+    openDatabase(version: number, upgradeCallback?: Function) {
         let self = this;
         return new Promise<any>((resolve, reject)=> {
             this.dbWrapper.dbVersion = version;
@@ -26,9 +26,11 @@ export class AngularIndexedDB {
                 reject("IndexedDB error: " + (<any>e.target).errorCode);
             };
 
-            request.onupgradeneeded = function (e) {
-                upgradeCallback(e, self.dbWrapper.db);
-            };
+            if (typeof upgradeCallback === "function") {
+                request.onupgradeneeded = function (e) {
+                    upgradeCallback(e, self.dbWrapper.db);
+                };
+            }
         });
     }
 

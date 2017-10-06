@@ -10,14 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var AngularIndexedDB = (function () {
+var AngularIndexedDB = /** @class */ (function () {
     function AngularIndexedDB(dbName, version) {
         this.utils = new Utils();
         this.dbWrapper = new DbWrapper(dbName, version);
     }
-    AngularIndexedDB.prototype.createStore = function (version, upgradeCallback) {
+    AngularIndexedDB.prototype.openDatabase = function (version, upgradeCallback) {
         var _this = this;
-        var self = this, promise = new Promise(function (resolve, reject) {
+        var self = this;
+        return new Promise(function (resolve, reject) {
             _this.dbWrapper.dbVersion = version;
             var request = _this.utils.indexedDB.open(_this.dbWrapper.dbName, version);
             request.onsuccess = function (e) {
@@ -27,18 +28,19 @@ var AngularIndexedDB = (function () {
             request.onerror = function (e) {
                 reject("IndexedDB error: " + e.target.errorCode);
             };
-            request.onupgradeneeded = function (e) {
-                upgradeCallback(e, self.dbWrapper.db);
-            };
+            if (typeof upgradeCallback === "function") {
+                request.onupgradeneeded = function (e) {
+                    upgradeCallback(e, self.dbWrapper.db);
+                };
+            }
         });
-        return promise;
     };
     AngularIndexedDB.prototype.getByKey = function (storeName, key) {
         var self = this;
-        var promise = new Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
             var transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                dbMode: self.utils.dbMode.readOnly,
+                dbMode: "readonly",
                 error: function (e) {
                     reject(e);
                 },
@@ -50,14 +52,13 @@ var AngularIndexedDB = (function () {
                 resolve(event.target.result);
             };
         });
-        return promise;
     };
     AngularIndexedDB.prototype.getAll = function (storeName, keyRange, indexDetails) {
         var self = this;
-        var promise = new Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
             var transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                dbMode: self.utils.dbMode.readOnly,
+                dbMode: "readonly",
                 error: function (e) {
                     reject(e);
                 },
@@ -85,14 +86,13 @@ var AngularIndexedDB = (function () {
                 }
             };
         });
-        return promise;
     };
     AngularIndexedDB.prototype.add = function (storeName, value, key) {
         var self = this;
-        var promise = new Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
             var transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                dbMode: self.utils.dbMode.readWrite,
+                dbMode: "readwrite",
                 error: function (e) {
                     reject(e);
                 },
@@ -105,14 +105,13 @@ var AngularIndexedDB = (function () {
                 key = evt.target.result;
             };
         });
-        return promise;
     };
     AngularIndexedDB.prototype.update = function (storeName, value, key) {
         var self = this;
-        var promise = new Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
             var transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                dbMode: self.utils.dbMode.readWrite,
+                dbMode: "readwrite",
                 error: function (e) {
                     reject(e);
                 },
@@ -125,14 +124,13 @@ var AngularIndexedDB = (function () {
             }), objectStore = transaction.objectStore(storeName);
             objectStore.put(value, key);
         });
-        return promise;
     };
     AngularIndexedDB.prototype.delete = function (storeName, key) {
         var self = this;
-        var promise = new Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
             var transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                dbMode: self.utils.dbMode.readWrite,
+                dbMode: "readwrite",
                 error: function (e) {
                     reject(e);
                 },
@@ -145,14 +143,13 @@ var AngularIndexedDB = (function () {
             }), objectStore = transaction.objectStore(storeName);
             objectStore["delete"](key);
         });
-        return promise;
     };
     AngularIndexedDB.prototype.openCursor = function (storeName, cursorCallback, keyRange) {
         var self = this;
-        var promise = new Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
             var transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                dbMode: self.utils.dbMode.readOnly,
+                dbMode: "readonly",
                 error: function (e) {
                     reject(e);
                 },
@@ -168,14 +165,13 @@ var AngularIndexedDB = (function () {
                 resolve();
             };
         });
-        return promise;
     };
     AngularIndexedDB.prototype.clear = function (storeName) {
         var self = this;
-        var promise = new Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
             var transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                dbMode: self.utils.dbMode.readWrite,
+                dbMode: "readwrite",
                 error: function (e) {
                     reject(e);
                 },
@@ -189,14 +185,13 @@ var AngularIndexedDB = (function () {
             objectStore.clear();
             resolve();
         });
-        return promise;
     };
     AngularIndexedDB.prototype.getByIndex = function (storeName, indexName, key) {
         var self = this;
-        var promise = new Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
             var transaction = self.dbWrapper.createTransaction({ storeName: storeName,
-                dbMode: self.utils.dbMode.readOnly,
+                dbMode: "readonly",
                 error: function (e) {
                     reject(e);
                 },
@@ -210,26 +205,21 @@ var AngularIndexedDB = (function () {
                 resolve(event.target.result);
             };
         });
-        return promise;
     };
+    AngularIndexedDB = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [String, Number])
+    ], AngularIndexedDB);
     return AngularIndexedDB;
 }());
-AngularIndexedDB = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [String, Number])
-], AngularIndexedDB);
 exports.AngularIndexedDB = AngularIndexedDB;
-var Utils = (function () {
+var Utils = /** @class */ (function () {
     function Utils() {
         this.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-        this.dbMode = {
-            readOnly: "readonly",
-            readWrite: "readwrite"
-        };
     }
     return Utils;
 }());
-var DbWrapper = (function () {
+var DbWrapper = /** @class */ (function () {
     function DbWrapper(dbName, version) {
         this.dbName = dbName;
         this.dbVersion = version || 1;

@@ -40,14 +40,14 @@ If you forget the version you the service will default to version 1.
 
 Use the APIs that the AngularIndexedDB service exposes to use indexeddb.
 In the API the following functions:
-* createStore(version, createCallback): initializes objectStore/s.
-The first parameter is the version to upgrade the database and the second one is a callback the will handle the creation of objectStores for that version.
-**createStore** returns a promise that is resolved when the store updated or rejected if an error occurred.
+* openDatabase(version, createCallback): opens the database for usage and update it's objectStore/s.
+The first parameter is the version to upgrade the database and the second one is an optional callback that will handle the creation of objectStores for that version if needed.
+**openDatabase** returns a promise that is resolved when the database is open or updated or rejected if an error occurred.
 
 Usage example:
 
 ```js
-db.createStore(1, (evt) => {
+db.openDatabase(1, (evt) => {
     let objectStore = evt.currentTarget.result.createObjectStore(
         'people', { keyPath: "id", autoIncrement: true });
 
