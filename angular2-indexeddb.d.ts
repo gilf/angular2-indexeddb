@@ -1,6 +1,6 @@
 export declare class AngularIndexedDB {
-    private utils;
-    private dbWrapper;
+    utils: Utils;
+    dbWrapper: DbWrapper;
     constructor(dbName: string, version: number);
     openDatabase(version: number, upgradeCallback?: Function): Promise<any>;
     getByKey(storeName: string, key: any): Promise<any>;
@@ -12,7 +12,26 @@ export declare class AngularIndexedDB {
     clear(storeName: string): Promise<any>;
     getByIndex(storeName: string, indexName: string, key: any): Promise<any>;
 }
+export declare class Utils {
+    indexedDB: IDBFactory;
+    constructor();
+}
 export interface IndexDetails {
     indexName: string;
     order: string;
+}
+export declare class DbWrapper {
+    dbName: string;
+    dbVersion: number;
+    db: IDBDatabase;
+    constructor(dbName: string, version: number);
+    validateStoreName(storeName: string): boolean;
+    validateBeforeTransaction(storeName: string, reject: Function): void;
+    createTransaction(options: {
+        storeName: string;
+        dbMode: IDBTransactionMode;
+        error: (e: Event) => any;
+        complete: (e: Event) => any;
+        abort?: (e: Event) => any;
+    }): IDBTransaction;
 }

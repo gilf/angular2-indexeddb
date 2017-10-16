@@ -4,8 +4,8 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class AngularIndexedDB {
-    private utils: Utils;
-    private dbWrapper: DbWrapper;
+    utils: Utils;
+    dbWrapper: DbWrapper;
 
     constructor(dbName: string, version: number) {
         this.utils = new Utils();
@@ -244,7 +244,7 @@ export class AngularIndexedDB {
     }
 }
 
-class Utils {
+export class Utils {
     indexedDB: IDBFactory;
 
     constructor() {
@@ -257,7 +257,7 @@ export interface IndexDetails {
     order: string;
 }
 
-class DbWrapper {
+export class DbWrapper {
     dbName: string;
     dbVersion: number;
     db: IDBDatabase;

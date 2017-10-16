@@ -219,6 +219,7 @@ var Utils = /** @class */ (function () {
     }
     return Utils;
 }());
+exports.Utils = Utils;
 var DbWrapper = /** @class */ (function () {
     function DbWrapper(dbName, version) {
         this.dbName = dbName;
@@ -246,4 +247,5 @@ var DbWrapper = /** @class */ (function () {
     };
     return DbWrapper;
 }());
+exports.DbWrapper = DbWrapper;
 //# sourceMappingURL=angular2-indexeddb.js.map
