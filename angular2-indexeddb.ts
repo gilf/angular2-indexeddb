@@ -1,8 +1,5 @@
 'use strict';
 
-import {Injectable} from '@angular/core';
-
-@Injectable()
 export class AngularIndexedDB {
     utils: Utils;
     dbWrapper: DbWrapper;
