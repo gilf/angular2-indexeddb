@@ -271,7 +271,7 @@ export class DbWrapper {
 
     validateBeforeTransaction(storeName: string, reject: Function) {
         if (!this.db) {
-            reject('You need to use the createStore function to create a database before you query it!');
+            reject('You need to use the openDatabase function to create a database before you query it!');
         }
         if (!this.validateStoreName(storeName)) {
             reject(('objectStore does not exists: ' + storeName));
