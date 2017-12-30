@@ -20,7 +20,9 @@ export class AngularIndexedDB {
             };
 
             request.onerror = function (e) {
-                reject("IndexedDB error: " + (<any>e.target).errorCode);
+                reject('IndexedDB error: ' + (<any>e.target).errorCode ?
+                    (<any>e.target).errorCode  + ' (' + (<any>e.target).error + ')' :
+                    (<any>e.target).errorCode);
             };
 
             if (typeof upgradeCallback === "function") {
