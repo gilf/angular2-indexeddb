@@ -150,7 +150,7 @@ Usage example:
 
 ```js
 db.openCursor('people', (evt) => {
-    var cursor = evt.target.result;
+    var cursor = (<any>evt.target).result;
     if(cursor) {
         console.log(cursor.value);
         cursor.continue();
