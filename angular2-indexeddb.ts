@@ -88,7 +88,7 @@ export class AngularIndexedDB {
             request.onsuccess = function (evt: Event) {
                 let cursor = (<IDBOpenDBRequest>evt.target).result;
                 if (cursor) {
-                    result.push(cursor.value);
+                    result.push(cursor["value"]);
                     cursor["continue"]();
                 } else {
                     resolve(result);
