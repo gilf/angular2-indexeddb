@@ -16,7 +16,9 @@ var AngularIndexedDB = /** @class */ (function () {
                 resolve();
             };
             request.onerror = function (e) {
-                reject("IndexedDB error: " + e.target.errorCode);
+                reject('IndexedDB error: ' + e.target.errorCode ?
+                    e.target.errorCode + ' (' + e.target.error + ')' :
+                    e.target.errorCode);
             };
             if (typeof upgradeCallback === "function") {
                 request.onupgradeneeded = function (e) {
@@ -68,7 +70,7 @@ var AngularIndexedDB = /** @class */ (function () {
             request.onsuccess = function (evt) {
                 var cursor = evt.target.result;
                 if (cursor) {
-                    result.push(cursor.value);
+                    result.push(cursor["value"]);
                     cursor["continue"]();
                 }
                 else {
@@ -218,7 +220,7 @@ var DbWrapper = /** @class */ (function () {
     ;
     DbWrapper.prototype.validateBeforeTransaction = function (storeName, reject) {
         if (!this.db) {
-            reject('You need to use the createStore function to create a database before you query it!');
+            reject('You need to use the openDatabase function to create a database before you query it!');
         }
         if (!this.validateStoreName(storeName)) {
             reject(('objectStore does not exists: ' + storeName));
