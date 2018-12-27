@@ -166,7 +166,7 @@ export class AngularIndexedDB {
         });
     }
 
-    openCursor(storeName: string, cursorCallback: (evt: Event) => void, keyRange?: IDBKeyRange) {
+    openCursor(storeName: string, cursorCallback: (evt: Event) => void, keyRange?: IDBKeyRange, indexDetails?: IndexDetails) {
         let self = this;
         return new Promise<any>((resolve, reject)=> {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
@@ -183,9 +183,19 @@ export class AngularIndexedDB {
                         reject(e);
                     }
                 }),
-                objectStore = transaction.objectStore(storeName),
-                request = objectStore.openCursor(keyRange);
+                objectStore = transaction.objectStore(storeName);
+            
+            let request;
 
+            if(indexDetails) {
+                let index = objectStore.index(indexDetails.indexName),
+                    order = (indexDetails.order === 'desc') ? 'prev' : 'next';
+                request = index.openCursor(keyRange, <IDBCursorDirection>order);
+            }
+            else {
+                request = objectStore.openCursor(keyRange);
+            }
+                
             request.onsuccess = (evt: Event) => {
                 cursorCallback(evt);
                 resolve();
